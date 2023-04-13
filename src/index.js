@@ -8,7 +8,10 @@ import { UsersItems } from './components/UsersItems';
 import { Users } from './components/Users';
 import { User } from './Pages/User';
 import { Home } from './Pages/Home';
-import { Post } from './Pages/Post';
+import { Post } from './components/PostInput';
+import { Posts } from './components/Posts';
+import { PostPage } from './Pages/PostsPage';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const router = createBrowserRouter([
   {
@@ -31,17 +34,31 @@ const router = createBrowserRouter([
       },
       {
         path: "/posts",
-        element: <Post/>,
+        element: <Posts/>,
+      },
+      {
+        path: "/posts/:id",
+        element: <PostPage/>,
       }
     ]
   },
  
 ]);
-
+const queryCache = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      // retry: false,
+      // staleTime: 30000,
+    },
+  },
+});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <RouterProvider router={router} />
+    <QueryClientProvider client={queryCache}> 
+    <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

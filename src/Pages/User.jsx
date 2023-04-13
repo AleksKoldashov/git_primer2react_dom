@@ -10,7 +10,7 @@ const params = useParams()
           .then(json => setUser(json))
     },[])
 
-    console.log(user.id);
+    console.log('User',params);
    return<div >
  
 
